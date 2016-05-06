@@ -1,30 +1,44 @@
-
-//
-//  SessionViewController .swift
-//  MallNavigator
-//
-//  Created by Max  on 5/4/16.
-//  Copyright © 2016 Max. All rights reserved.
-//
-
 import UIKit
 
-class SessionViewController : UITableViewController, NameModalViewControllerDelegate {
+class CategoriesViewController : UITableViewController, NewNameViewControllerDelegate {
     
     var session: String?
     var categories = [String]()
+    var archiveURLPath: String?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        archiveURLPath = Utility.getArchiveURLPath(session! + "categories")
+        navigationItem.title = session
+        if let loadedCategories = loadCategories() {
+            categories = loadedCategories
+        }
     }
     
-    //MARK: Actions
-
+    func saveCategories() {
+        NSKeyedArchiver.archiveRootObject(categories, toFile: archiveURLPath!)
+    }
+    
+    func loadCategories() -> [String]? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(archiveURLPath!) as? [String]
+    }
+    
     //MARK: Segues
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "createNewCategory" {
-            let destination = (segue.destinationViewController as! UINavigationController).topViewController as! NameModalViewController
+        switch segue.identifier! {
+        case "createNewCategory":
+            let destination = (segue.destinationViewController as! UINavigationController).topViewController as! NewNameViewController
             destination.delegate = self
+            destination.navigationItem.title = "New category"
+            destination.labelText = "Category name"
+            break
+        case "showPhotos":
+            let destination = segue.destinationViewController as! PhotosViewController
+            destination.category = (sender as! UITableViewCell).textLabel!.text
+            destination.session = session
+            break
+        default: break
         }
     }
     
@@ -43,15 +57,17 @@ class SessionViewController : UITableViewController, NameModalViewControllerDele
         if editingStyle == .Delete {
             categories.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            saveCategories()
         }
     }
     
-    //MARK: NameModalViewControllerDelegate
+    //MARK: NewNameViewControllerDelegate
     func sendName(name: String?) {
         if let categoryName = name {
             categories.insert(categoryName, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            saveCategories()
         }
     }
     

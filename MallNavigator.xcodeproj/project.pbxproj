@@ -11,9 +11,12 @@
 		2A4568711CD589CA003CC8B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A45686F1CD589CA003CC8B0 /* Main.storyboard */; };
 		2A4568731CD589CA003CC8B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A4568721CD589CA003CC8B0 /* Assets.xcassets */; };
 		2A4568761CD589CA003CC8B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A4568741CD589CA003CC8B0 /* LaunchScreen.storyboard */; };
-		2AD0D5131CD91D0500DA8FF4 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D5121CD91D0500DA8FF4 /* MasterViewController.swift */; };
-		2AD0D5151CDA221900DA8FF4 /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D5141CDA221900DA8FF4 /* SessionViewController.swift */; };
-		2AD0D5191CDA558700DA8FF4 /* NameModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D5181CDA558700DA8FF4 /* NameModalViewController.swift */; };
+		2AD0D5131CD91D0500DA8FF4 /* SessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D5121CD91D0500DA8FF4 /* SessionsViewController.swift */; };
+		2AD0D5151CDA221900DA8FF4 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D5141CDA221900DA8FF4 /* CategoriesViewController.swift */; };
+		2AD0D5191CDA558700DA8FF4 /* NewNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D5181CDA558700DA8FF4 /* NewNameViewController.swift */; };
+		2AD0D51B1CDBF14600DA8FF4 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D51A1CDBF14600DA8FF4 /* Utility.swift */; };
+		2AD0D51D1CDC132B00DA8FF4 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D51C1CDC132B00DA8FF4 /* PhotosViewController.swift */; };
+		2AD0D51F1CDC21DB00DA8FF4 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D51E1CDC21DB00DA8FF4 /* PhotosTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,9 +26,12 @@
 		2A4568721CD589CA003CC8B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A4568751CD589CA003CC8B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2A4568771CD589CA003CC8B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2AD0D5121CD91D0500DA8FF4 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		2AD0D5141CDA221900DA8FF4 /* SessionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionViewController.swift; sourceTree = "<group>"; };
-		2AD0D5181CDA558700DA8FF4 /* NameModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameModalViewController.swift; sourceTree = "<group>"; };
+		2AD0D5121CD91D0500DA8FF4 /* SessionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewController.swift; sourceTree = "<group>"; };
+		2AD0D5141CDA221900DA8FF4 /* CategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		2AD0D5181CDA558700DA8FF4 /* NewNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNameViewController.swift; sourceTree = "<group>"; };
+		2AD0D51A1CDBF14600DA8FF4 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		2AD0D51C1CDC132B00DA8FF4 /* PhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		2AD0D51E1CDC21DB00DA8FF4 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,13 +65,16 @@
 			isa = PBXGroup;
 			children = (
 				2A45686B1CD589CA003CC8B0 /* AppDelegate.swift */,
-				2AD0D5121CD91D0500DA8FF4 /* MasterViewController.swift */,
+				2AD0D5121CD91D0500DA8FF4 /* SessionsViewController.swift */,
+				2AD0D5141CDA221900DA8FF4 /* CategoriesViewController.swift */,
+				2AD0D51C1CDC132B00DA8FF4 /* PhotosViewController.swift */,
+				2AD0D51E1CDC21DB00DA8FF4 /* PhotosTableViewCell.swift */,
+				2AD0D5181CDA558700DA8FF4 /* NewNameViewController.swift */,
+				2AD0D51A1CDBF14600DA8FF4 /* Utility.swift */,
 				2A45686F1CD589CA003CC8B0 /* Main.storyboard */,
 				2A4568721CD589CA003CC8B0 /* Assets.xcassets */,
 				2A4568741CD589CA003CC8B0 /* LaunchScreen.storyboard */,
 				2A4568771CD589CA003CC8B0 /* Info.plist */,
-				2AD0D5141CDA221900DA8FF4 /* SessionViewController.swift */,
-				2AD0D5181CDA558700DA8FF4 /* NameModalViewController.swift */,
 			);
 			path = MallNavigator;
 			sourceTree = "<group>";
@@ -142,9 +151,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AD0D5151CDA221900DA8FF4 /* SessionViewController.swift in Sources */,
-				2AD0D5191CDA558700DA8FF4 /* NameModalViewController.swift in Sources */,
-				2AD0D5131CD91D0500DA8FF4 /* MasterViewController.swift in Sources */,
+				2AD0D51B1CDBF14600DA8FF4 /* Utility.swift in Sources */,
+				2AD0D51F1CDC21DB00DA8FF4 /* PhotosTableViewCell.swift in Sources */,
+				2AD0D5151CDA221900DA8FF4 /* CategoriesViewController.swift in Sources */,
+				2AD0D5191CDA558700DA8FF4 /* NewNameViewController.swift in Sources */,
+				2AD0D51D1CDC132B00DA8FF4 /* PhotosViewController.swift in Sources */,
+				2AD0D5131CD91D0500DA8FF4 /* SessionsViewController.swift in Sources */,
 				2A45686C1CD589CA003CC8B0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

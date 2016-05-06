@@ -1,30 +1,38 @@
-//
-//  MasterViewController.swift
-//  MallNavigator
-//
-//  Created by Max  on 5/3/16.
-//  Copyright © 2016 Max. All rights reserved.
-//
-
 import UIKit
 
-class MasterViewController : UITableViewController, NameModalViewControllerDelegate {
+class SessionsViewController : UITableViewController, NewNameViewControllerDelegate {
     
     var sessions = [String]()
+    let archiveURLPath = Utility.getArchiveURLPath("sessions")
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let loadedSessions = loadSessions() {
+            sessions = loadedSessions
+        }
     }
     
-    //MARK: Actions
-    @IBAction func insertNewSession(sender: UIBarButtonItem) {
+    func saveSessions() {
+        NSKeyedArchiver.archiveRootObject(sessions, toFile: archiveURLPath!)
+    }
+    
+    func loadSessions() -> [String]? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(archiveURLPath!) as? [String]
+
     }
     
     //MARK: Segues
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "createNewSession" {
-            let destination = (segue.destinationViewController as! UINavigationController).topViewController as! NameModalViewController
+        switch segue.identifier! {
+        case "createNewSession":
+            let destination = (segue.destinationViewController as! UINavigationController).topViewController as! NewNameViewController
             destination.delegate = self
+            break
+        case "showCategories":
+            let destination = segue.destinationViewController as! CategoriesViewController
+            destination.session = (sender as! UITableViewCell).textLabel!.text
+            break
+        default: break
         }
     }
     
@@ -43,22 +51,17 @@ class MasterViewController : UITableViewController, NameModalViewControllerDeleg
         if editingStyle == .Delete {
             sessions.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            saveSessions()
         }
     }
     
-    //MARK: NameModalViewControllerDelegate
+    //MARK: NewNameViewControllerDelegate
     func sendName(name: String?) {
         if let sessionName = name {
             sessions.insert(sessionName, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            saveSessions()
         }
     }
-    
-    
-    
-    
-    
-    
-    
 }
