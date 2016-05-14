@@ -1,12 +1,14 @@
 import UIKit
+import CoreLocation
 
-class PhotosViewController : UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class PhotosViewController : UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate {
     
     var photos = [UIImage]()
     var session: String?
     var category: String?
     var archiveURLPath: String?
     var imagePicker: UIImagePickerController!
+    var userLocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,6 +19,11 @@ class PhotosViewController : UITableViewController, UINavigationControllerDelega
                 photos = loadedPhotos
             }
         }
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = 10
+        locationManager.startUpdatingLocation()
     }
     
     func savePhotos() {
@@ -61,5 +68,10 @@ class PhotosViewController : UITableViewController, UINavigationControllerDelega
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         savePhotos()
+    }
+    
+    //MARK: CLLocationManagerDelegate
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        userLocation = locations[0]
     }
 }
