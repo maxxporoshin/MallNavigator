@@ -1,9 +1,29 @@
 import UIKit
 import CoreLocation
 
+class Article : NSObject, NSCoding {
+    let photoKey = "photo"
+    let locationKey = "location"
+    
+    var photo: UIImage?
+    var location: CLLocation?
+    
+    init(photo: UIImage) {
+        self.photo = photo
+    }
+    @objc func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(photo, forKey: photoKey)
+        aCoder.encodeObject(location, forKey: locationKey)
+    }
+    @objc required init?(coder aDecoder: NSCoder) {
+        photo = aDecoder.decodeObjectForKey(photoKey) as? UIImage
+        location = aDecoder.decodeObjectForKey(locationKey) as? CLLocation
+    }
+}
+
 class PhotosViewController : UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate {
     
-    var photos = [UIImage]()
+    var articles = [Article]()
     var session: String?
     var category: String?
     var archiveURLPath: String?
@@ -13,10 +33,10 @@ class PhotosViewController : UITableViewController, UINavigationControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         if session != nil && category != nil {
-            archiveURLPath = Utility.getArchiveURLPath(session! + category! + "categories")
+            archiveURLPath = Utility.getArchiveURLPath(session! + category! + "articles")
             navigationItem.title = session
-            if let loadedPhotos = loadPhotos() {
-                photos = loadedPhotos
+            if let loadedArticles = loadArticles() {
+                articles = loadedArticles
             }
         }
         let locationManager = CLLocationManager()
@@ -26,12 +46,12 @@ class PhotosViewController : UITableViewController, UINavigationControllerDelega
         locationManager.startUpdatingLocation()
     }
     
-    func savePhotos() {
-        NSKeyedArchiver.archiveRootObject(photos, toFile: archiveURLPath!)
+    func saveArticles() {
+        NSKeyedArchiver.archiveRootObject(articles, toFile: archiveURLPath!)
     }
     
-    func loadPhotos() -> [UIImage]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(archiveURLPath!) as? [UIImage]
+    func loadArticles() -> [Article]? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(archiveURLPath!) as? [Article]
     }
     
     //MARK: Actions
@@ -44,30 +64,30 @@ class PhotosViewController : UITableViewController, UINavigationControllerDelega
     
     //MARK: Table View
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photos.count
+        return articles.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PhotosTableViewCell
-        cell.photoImageView?.image = photos[indexPath.row]
+        cell.photoImageView?.image = articles[indexPath.row].photo
         return cell
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            photos.removeAtIndex(indexPath.row)
+            articles.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            savePhotos()
+            saveArticles()
         }
     }
     
     //MARK: UIImagePickerControllerDelegate
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
-        photos.insert((info[UIImagePickerControllerOriginalImage] as? UIImage)!, atIndex: 0)
+        articles.insert(Article(photo: (info[UIImagePickerControllerOriginalImage] as? UIImage)!), atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        savePhotos()
+        saveArticles()
     }
     
     //MARK: CLLocationManagerDelegate
