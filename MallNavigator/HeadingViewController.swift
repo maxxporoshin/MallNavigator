@@ -10,6 +10,7 @@ class HeadingViewController : UIViewController, CLLocationManagerDelegate {
     var angle: Double? = 0
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()

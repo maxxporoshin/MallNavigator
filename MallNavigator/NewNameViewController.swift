@@ -19,7 +19,7 @@ class NewNameViewController : UIViewController, UITextFieldDelegate {
     
     //MARK: Actions
     @IBAction func save(sender: UIBarButtonItem) {
-        delegate.sendName(textField.text)
+        delegate.newName(textField.text)
         textField.resignFirstResponder()
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -36,5 +36,5 @@ class NewNameViewController : UIViewController, UITextFieldDelegate {
 }
 
 protocol NewNameViewControllerDelegate {
-    func sendName(name: String?)
+    func newName(name: String?)
 }

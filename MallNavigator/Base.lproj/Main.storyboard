@@ -293,7 +293,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Needle" width="300" height="300"/>
+        <image name="Needle" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tL1-OM-NPV"/>

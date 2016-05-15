@@ -2,26 +2,13 @@ import UIKit
 
 class CategoriesViewController : UITableViewController, NewNameViewControllerDelegate {
     
-    var session: String?
-    var categories = [String]()
-    var archiveURLPath: String?
-    
+    var data: SessionsData!
+    var sessionIndex: Int!
+    var selectedRow: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        archiveURLPath = Utility.getArchiveURLPath(session! + " categories")
-        navigationItem.title = session
-        if let loadedCategories = loadCategories() {
-            categories = loadedCategories
-        }
-    }
-    
-    func saveCategories() {
-        NSKeyedArchiver.archiveRootObject(categories, toFile: archiveURLPath!)
-    }
-    
-    func loadCategories() -> [String]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(archiveURLPath!) as? [String]
+        navigationItem.title = data.sessions[sessionIndex].name
     }
     
     //MARK: Segues
@@ -35,8 +22,9 @@ class CategoriesViewController : UITableViewController, NewNameViewControllerDel
             break
         case "showPhotos":
             let destination = segue.destinationViewController as! PhotosViewController
-            destination.category = (sender as! UITableViewCell).textLabel!.text
-            destination.session = session
+            destination.data = data
+            destination.sessionIndex = sessionIndex
+            destination.categoryIndex = selectedRow
             break
         default: break
         }
@@ -44,30 +32,35 @@ class CategoriesViewController : UITableViewController, NewNameViewControllerDel
     
     //MARK: Table View
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return data.sessions[sessionIndex].categories.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel!.text = categories[indexPath.row]
+        cell.textLabel!.text = data.sessions[sessionIndex].categories[indexPath.row].name
         return cell
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            categories.removeAtIndex(indexPath.row)
+            data.sessions[sessionIndex].categories.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            saveCategories()
+            data.save()
         }
     }
     
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        selectedRow = indexPath.row
+        return indexPath
+    }
+    
     //MARK: NewNameViewControllerDelegate
-    func sendName(name: String?) {
+    func newName(name: String?) {
         if let categoryName = name {
-            categories.insert(categoryName, atIndex: 0)
+            data.sessions[sessionIndex].categories.insert(Category(name: categoryName), atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            saveCategories()
+            data.save()
         }
     }
     
