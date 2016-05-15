@@ -8,8 +8,9 @@ class Article : NSObject, NSCoding {
     var photo: UIImage?
     var location: CLLocation?
     
-    init(photo: UIImage) {
+    init(photo: UIImage, location: CLLocation) {
         self.photo = photo
+        self.location = location
     }
     @objc func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(photo, forKey: photoKey)
@@ -28,21 +29,24 @@ class PhotosViewController : UITableViewController, UINavigationControllerDelega
     var category: String?
     var archiveURLPath: String?
     var imagePicker: UIImagePickerController!
+    var locationManager: CLLocationManager!
     var userLocation: CLLocation?
+    var selectedCellRow: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if session != nil && category != nil {
-            archiveURLPath = Utility.getArchiveURLPath(session! + category! + "articles")
+            archiveURLPath = Utility.getArchiveURLPath(session! + " " + category! + " articles")
             navigationItem.title = session
             if let loadedArticles = loadArticles() {
                 articles = loadedArticles
             }
         }
-        let locationManager = CLLocationManager()
+        locationManager = CLLocationManager()
         locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = 10
+        locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.startUpdatingLocation()
     }
     
@@ -52,6 +56,18 @@ class PhotosViewController : UITableViewController, UINavigationControllerDelega
     
     func loadArticles() -> [Article]? {
         return NSKeyedUnarchiver.unarchiveObjectWithFile(archiveURLPath!) as? [Article]
+    }
+    
+    //MARK: Segues
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        switch segue.identifier! {
+        case "showNeedle":
+            let destination = segue.destinationViewController as! HeadingViewController
+            let article = articles[selectedCellRow!]
+            destination.targetLocation = article.location
+            break
+        default: break
+        }
     }
     
     //MARK: Actions
@@ -80,11 +96,16 @@ class PhotosViewController : UITableViewController, UINavigationControllerDelega
             saveArticles()
         }
     }
+        
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        selectedCellRow = indexPath.row
+        return indexPath
+    }
     
     //MARK: UIImagePickerControllerDelegate
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
-        articles.insert(Article(photo: (info[UIImagePickerControllerOriginalImage] as? UIImage)!), atIndex: 0)
+        articles.insert(Article(photo: info[UIImagePickerControllerOriginalImage] as! UIImage, location: userLocation!), atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         saveArticles()

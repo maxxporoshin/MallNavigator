@@ -9,7 +9,7 @@ class CategoriesViewController : UITableViewController, NewNameViewControllerDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        archiveURLPath = Utility.getArchiveURLPath(session! + "categories")
+        archiveURLPath = Utility.getArchiveURLPath(session! + " categories")
         navigationItem.title = session
         if let loadedCategories = loadCategories() {
             categories = loadedCategories

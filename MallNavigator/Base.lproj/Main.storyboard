@@ -184,6 +184,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="photoImageView" destination="0eg-LP-lPQ" id="jak-Dm-Mzu"/>
+                                    <segue destination="Lrg-RQ-XuL" kind="show" identifier="showNeedle" id="CWX-CP-L1J"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -204,6 +205,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9PU-Bm-5bj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="836" y="1143"/>
+        </scene>
+        <!--Heading View Controller-->
+        <scene sceneID="ygb-jt-9ny">
+            <objects>
+                <viewController id="Lrg-RQ-XuL" customClass="HeadingViewController" customModule="MallNavigator" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DB2-cS-6bn"/>
+                        <viewControllerLayoutGuide type="bottom" id="zWI-31-AM3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eLo-9j-RSg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Needle" translatesAutoresizingMaskIntoConstraints="NO" id="cuB-1z-2Ex">
+                                <rect key="frame" x="20" y="164" width="560" height="292"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="zWI-31-AM3" firstAttribute="top" secondItem="cuB-1z-2Ex" secondAttribute="bottom" constant="100" id="A72-1V-adG"/>
+                            <constraint firstItem="cuB-1z-2Ex" firstAttribute="top" secondItem="DB2-cS-6bn" secondAttribute="bottom" constant="100" id="w1m-sD-tEv"/>
+                            <constraint firstItem="cuB-1z-2Ex" firstAttribute="leading" secondItem="eLo-9j-RSg" secondAttribute="leadingMargin" id="w4h-84-jn0"/>
+                            <constraint firstItem="cuB-1z-2Ex" firstAttribute="trailing" secondItem="eLo-9j-RSg" secondAttribute="trailingMargin" id="yRn-63-FHT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="needle" destination="cuB-1z-2Ex" id="lyg-31-XLV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cY7-id-oo6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1562" y="1143"/>
         </scene>
         <!--Shoping Sessions-->
         <scene sceneID="4nl-Cz-WjB">
@@ -259,6 +292,9 @@
             <point key="canvasLocation" x="-616" y="1143"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Needle" width="300" height="300"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tL1-OM-NPV"/>
     </inferredMetricsTieBreakers>
