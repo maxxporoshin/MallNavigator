@@ -7,6 +7,7 @@ class NewNameViewController : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var label: UILabel!
     var labelText: String?
+    var textFieldText: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,6 +16,9 @@ class NewNameViewController : UIViewController, UITextFieldDelegate {
             label.text = labelText
         }
         textField.becomeFirstResponder()
+        if textFieldText != nil {
+            textField.text = textFieldText
+        }
     }
     
     //MARK: Actions
@@ -29,6 +33,12 @@ class NewNameViewController : UIViewController, UITextFieldDelegate {
     }
     
     //MARK: UITextFieldDeleagte
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if !textField.text!.isEmpty {
+            textField.selectedTextRange = textField.textRangeFromPosition(textField.beginningOfDocument, toPosition: textField.endOfDocument)
+        }
+    }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

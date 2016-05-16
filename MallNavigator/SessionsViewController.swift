@@ -16,6 +16,23 @@ class SessionsViewController : UITableViewController, NewNameViewControllerDeleg
         case "createNewSession":
             let destination = (segue.destinationViewController as! UINavigationController).topViewController as! NewNameViewController
             destination.delegate = self
+            var i = 1
+            while i != 0 {
+                var isFound = false
+                let newSessionName = "Session \(i)"
+                for session in data.sessions {
+                    if session.name == newSessionName {
+                        isFound = true
+                    }
+                }
+                if !isFound {
+                    destination.textFieldText = newSessionName
+                    i = 0
+                }
+                else {
+                    i += 1
+                }
+            }
             break
         case "showCategories":
             let destination = segue.destinationViewController as! CategoriesViewController

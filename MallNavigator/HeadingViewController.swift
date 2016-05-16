@@ -55,10 +55,10 @@ class HeadingViewController : UIViewController, CLLocationManagerDelegate {
         let vQPLatitude: Double = pointLatitude - userLatitude
         let vQPLongitude: Double = pointLongitude - userLongitude
         
-        let vQLLatitude: Double = targetLatitude - userLatitude
-        let vQLLongitude: Double = targetLongitude - userLongitude
+        let vQTLatitude: Double = targetLatitude - userLatitude
+        let vQTLongitude: Double = targetLongitude - userLongitude
         
-        let cosDegrees: Double = (vQPLatitude * vQLLatitude + vQPLongitude * vQLLatitude) / sqrt((vQPLatitude * vQPLatitude + vQPLongitude * vQPLongitude) * (vQLLatitude * vQLLatitude + vQLLongitude * vQLLongitude))
+        let cosDegrees: Double = (vQPLatitude * vQTLatitude + vQPLongitude * vQTLatitude) / sqrt((vQPLatitude * vQPLatitude + vQPLongitude * vQPLongitude) * (vQTLatitude * vQTLatitude + vQTLongitude * vQTLongitude))
         angle = angle! + acos(cosDegrees)
     }
     

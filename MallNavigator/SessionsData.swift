@@ -24,6 +24,9 @@ class Session : NSObject, NSCoding {
     
     init(name: String) {
         self.name = name
+        categories.append(Category(name: "Jeans"))
+        categories.append(Category(name: "Shoes"))
+        categories.append(Category(name: "Shirts"))
     }
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(name, forKey: sessionNameKey)
