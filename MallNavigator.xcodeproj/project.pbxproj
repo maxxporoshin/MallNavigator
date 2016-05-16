@@ -18,6 +18,7 @@
 		2AD0D5191CDA558700DA8FF4 /* NewNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D5181CDA558700DA8FF4 /* NewNameViewController.swift */; };
 		2AD0D51D1CDC132B00DA8FF4 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D51C1CDC132B00DA8FF4 /* PhotosViewController.swift */; };
 		2AD0D51F1CDC21DB00DA8FF4 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD0D51E1CDC21DB00DA8FF4 /* PhotosTableViewCell.swift */; };
+		2AE4CEF21CEA608200A78440 /* MallNavigator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AE4CEF01CEA608200A78440 /* MallNavigator.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		2AD0D5181CDA558700DA8FF4 /* NewNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNameViewController.swift; sourceTree = "<group>"; };
 		2AD0D51C1CDC132B00DA8FF4 /* PhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		2AD0D51E1CDC21DB00DA8FF4 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
+		2AE4CEF11CEA608200A78440 /* MallNavigator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MallNavigator.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				2A17DF3E1CE904FF00B05FAD /* Assets.xcassets */,
 				2A4568741CD589CA003CC8B0 /* LaunchScreen.storyboard */,
 				2A4568771CD589CA003CC8B0 /* Info.plist */,
+				2AE4CEF01CEA608200A78440 /* MallNavigator.xcdatamodeld */,
 			);
 			path = MallNavigator;
 			sourceTree = "<group>";
@@ -154,6 +157,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AE4CEF21CEA608200A78440 /* MallNavigator.xcdatamodeld in Sources */,
 				2AD0D51F1CDC21DB00DA8FF4 /* PhotosTableViewCell.swift in Sources */,
 				2AD0D5151CDA221900DA8FF4 /* CategoriesViewController.swift in Sources */,
 				2AD0D5191CDA558700DA8FF4 /* NewNameViewController.swift in Sources */,
@@ -283,6 +287,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Home.MallNavigator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -297,6 +302,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Home.MallNavigator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -322,6 +328,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2AE4CEF01CEA608200A78440 /* MallNavigator.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2AE4CEF11CEA608200A78440 /* MallNavigator.xcdatamodel */,
+			);
+			currentVersion = 2AE4CEF11CEA608200A78440 /* MallNavigator.xcdatamodel */;
+			path = MallNavigator.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2A4568601CD589CA003CC8B0 /* Project object */;
 }
