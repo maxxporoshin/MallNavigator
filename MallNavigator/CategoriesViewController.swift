@@ -1,14 +1,43 @@
 import UIKit
+import CoreData
 
 class CategoriesViewController : UITableViewController, NewNameViewControllerDelegate {
     
-    var data: SessionsData!
-    var sessionIndex: Int!
+    var categories = [NSManagedObject]()
+    let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    var session: NSManagedObject!
     var selectedRow: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = data.sessions[sessionIndex].name
+        fetchData()
+        navigationItem.title = session.valueForKey("name") as? String
+    }
+    
+    func addCategory(name: String) {
+        let categoryEntity = NSEntityDescription.entityForName("Category", inManagedObjectContext: managedContext)!
+        let category = NSManagedObject(entity: categoryEntity, insertIntoManagedObjectContext: managedContext)
+        category.setValue(name, forKey: "name")
+        category.setValue(session, forKey: "session")
+        saveData()
+    }
+    
+    func saveData() {
+        do {
+            try managedContext.save()
+        } catch {
+            print("Could not save")
+        }
+    }
+    
+    func fetchData() {
+        let fetchRequest = NSFetchRequest(entityName: "Category")
+        fetchRequest.predicate = NSPredicate(format: "session == %@", session)
+        do {
+            categories = try managedContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]
+        } catch {
+            print("Could not fetch")
+        }
     }
     
     //MARK: Segues
@@ -22,9 +51,7 @@ class CategoriesViewController : UITableViewController, NewNameViewControllerDel
             break
         case "showPhotos":
             let destination = segue.destinationViewController as! PhotosViewController
-            destination.data = data
-            destination.sessionIndex = sessionIndex
-            destination.categoryIndex = selectedRow
+            destination.category = categories[selectedRow!]
             break
         default: break
         }
@@ -32,20 +59,20 @@ class CategoriesViewController : UITableViewController, NewNameViewControllerDel
     
     //MARK: Table View
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.sessions[sessionIndex].categories.count
+        return categories.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel!.text = data.sessions[sessionIndex].categories[indexPath.row].name
+        cell.textLabel!.text = categories[indexPath.row].valueForKey("name") as? String
         return cell
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            data.sessions[sessionIndex].categories.removeAtIndex(indexPath.row)
+            managedContext.deleteObject(categories[indexPath.row])
+            fetchData()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            data.save()
         }
     }
     
@@ -57,11 +84,11 @@ class CategoriesViewController : UITableViewController, NewNameViewControllerDel
     //MARK: NewNameViewControllerDelegate
     func newName(name: String?) {
         if let categoryName = name {
-            data.sessions[sessionIndex].categories.insert(Category(name: categoryName), atIndex: 0)
-            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-            tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            data.save()
+            addCategory(categoryName)
+            fetchData()
+            tableView.reloadData()
         }
+
     }
     
     

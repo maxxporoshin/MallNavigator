@@ -1,13 +1,39 @@
 import UIKit
+import CoreData
 
 class SessionsViewController : UITableViewController, NewNameViewControllerDelegate {
     
-    var data = SessionsData()
+    var sessions = [NSManagedObject]()
+    let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var selectedRow: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        data.load()
+        fetchData()
+    }
+    
+    func addSession(name: String) {
+        let sessionEntity = NSEntityDescription.entityForName("Session", inManagedObjectContext: managedContext)!
+        let session = NSManagedObject(entity: sessionEntity, insertIntoManagedObjectContext: managedContext)
+        session.setValue(name, forKey: "name")
+        saveData()
+    }
+    
+    func saveData() {
+        do {
+            try managedContext.save()
+        } catch {
+            print("Could not save")
+        }
+    }
+    
+    func fetchData() {
+        let fetchRequest = NSFetchRequest(entityName: "Session")
+        do {
+            sessions = try managedContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]
+        } catch {
+            print("Could not fetch")
+        }
     }
     
     //MARK: Segues
@@ -20,8 +46,8 @@ class SessionsViewController : UITableViewController, NewNameViewControllerDeleg
             while i != 0 {
                 var isFound = false
                 let newSessionName = "Session \(i)"
-                for session in data.sessions {
-                    if session.name == newSessionName {
+                for session in sessions {
+                    if session.valueForKey("name") as? String == newSessionName {
                         isFound = true
                     }
                 }
@@ -36,29 +62,29 @@ class SessionsViewController : UITableViewController, NewNameViewControllerDeleg
             break
         case "showCategories":
             let destination = segue.destinationViewController as! CategoriesViewController
-            destination.data = data
-            destination.sessionIndex = selectedRow
+            destination.session = sessions[selectedRow!]
             break
         default: break
+            
         }
     }
     
     //MARK: Table View
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.sessions.count
+        return sessions.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel!.text = data.sessions[indexPath.row].name
+        cell.textLabel!.text = sessions[indexPath.row].valueForKey("name") as? String
         return cell
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            data.sessions.removeAtIndex(indexPath.row)
+            managedContext.deleteObject(sessions[indexPath.row])
+            fetchData()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            data.save()
         }
     }
     
@@ -70,10 +96,9 @@ class SessionsViewController : UITableViewController, NewNameViewControllerDeleg
     //MARK: NewNameViewControllerDelegate
     func newName(name: String?) {
         if let sessionName = name {
-            data.sessions.insert(Session(name: sessionName), atIndex: 0)
-            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-            tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            data.save()
+            addSession(sessionName)
+            fetchData()
+            tableView.reloadData()
         }
     }
 }

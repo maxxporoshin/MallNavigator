@@ -218,19 +218,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Needle" translatesAutoresizingMaskIntoConstraints="NO" id="cuB-1z-2Ex">
-                                <rect key="frame" x="20" y="164" width="560" height="292"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ekN-Lz-dq3">
+                                <rect key="frame" x="20" y="473" width="560" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="qC5-6I-zf8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow_navigation_gps_locate_location-513" translatesAutoresizingMaskIntoConstraints="NO" id="cuB-1z-2Ex">
+                                <rect key="frame" x="20" y="135" width="560" height="330"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zWI-31-AM3" firstAttribute="top" secondItem="cuB-1z-2Ex" secondAttribute="bottom" constant="100" id="A72-1V-adG"/>
-                            <constraint firstItem="cuB-1z-2Ex" firstAttribute="top" secondItem="DB2-cS-6bn" secondAttribute="bottom" constant="100" id="w1m-sD-tEv"/>
-                            <constraint firstItem="cuB-1z-2Ex" firstAttribute="leading" secondItem="eLo-9j-RSg" secondAttribute="leadingMargin" id="w4h-84-jn0"/>
-                            <constraint firstItem="cuB-1z-2Ex" firstAttribute="trailing" secondItem="eLo-9j-RSg" secondAttribute="trailingMargin" id="yRn-63-FHT"/>
+                            <constraint firstItem="cuB-1z-2Ex" firstAttribute="centerX" secondItem="eLo-9j-RSg" secondAttribute="centerX" id="0Dp-Nr-j0r"/>
+                            <constraint firstItem="ekN-Lz-dq3" firstAttribute="trailing" secondItem="eLo-9j-RSg" secondAttribute="trailingMargin" id="1Uq-cE-BdN"/>
+                            <constraint firstItem="ekN-Lz-dq3" firstAttribute="leading" secondItem="eLo-9j-RSg" secondAttribute="leadingMargin" id="Eie-do-ya5"/>
+                            <constraint firstItem="ekN-Lz-dq3" firstAttribute="top" secondItem="cuB-1z-2Ex" secondAttribute="bottom" constant="8" id="Nv9-ZT-geg"/>
+                            <constraint firstItem="ekN-Lz-dq3" firstAttribute="centerX" secondItem="eLo-9j-RSg" secondAttribute="centerX" id="PxW-HJ-T0f"/>
+                            <constraint firstItem="cuB-1z-2Ex" firstAttribute="leading" secondItem="eLo-9j-RSg" secondAttribute="leadingMargin" id="REB-GL-n5J"/>
+                            <constraint firstItem="zWI-31-AM3" firstAttribute="top" secondItem="ekN-Lz-dq3" secondAttribute="bottom" constant="8" id="Vcb-t0-a49"/>
+                            <constraint firstItem="cuB-1z-2Ex" firstAttribute="centerY" secondItem="eLo-9j-RSg" secondAttribute="centerY" id="bhm-fq-IaA"/>
+                            <constraint firstItem="cuB-1z-2Ex" firstAttribute="trailing" secondItem="eLo-9j-RSg" secondAttribute="trailingMargin" id="u1V-PH-FvV"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="label" destination="ekN-Lz-dq3" id="a5Y-26-f8W"/>
                         <outlet property="needle" destination="cuB-1z-2Ex" id="lyg-31-XLV"/>
                     </connections>
                 </viewController>
@@ -293,7 +308,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Needle" width="256" height="256"/>
+        <image name="Arrow_navigation_gps_locate_location-513" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tL1-OM-NPV"/>

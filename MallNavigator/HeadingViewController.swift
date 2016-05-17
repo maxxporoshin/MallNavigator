@@ -3,9 +3,10 @@ import CoreLocation
 
 class HeadingViewController : UIViewController, CLLocationManagerDelegate {
     
+    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var needle: UIImageView!
     var locationManager: CLLocationManager!
-    var targetLocation: CLLocation?
+    var targetLocation: CLLocation!
     var userLocation: CLLocation?
     var angle: Double? = 0
     
@@ -23,8 +24,8 @@ class HeadingViewController : UIViewController, CLLocationManagerDelegate {
     func calculateAngle() {
         let userLatitude = userLocation!.coordinate.latitude
         let userLongitude = userLocation!.coordinate.longitude
-        let targetLatitude = targetLocation!.coordinate.latitude
-        let targetLongitude = targetLocation!.coordinate.longitude
+        let targetLatitude = targetLocation.coordinate.latitude
+        let targetLongitude = targetLocation.coordinate.longitude
         var pointLatitude: CLLocationDegrees! = 0
         var pointLongitude: CLLocationDegrees! = 0
         
@@ -65,6 +66,7 @@ class HeadingViewController : UIViewController, CLLocationManagerDelegate {
     //MARK: CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userLocation = locations[0]
+        label.text = Int(userLocation!.distanceFromLocation(targetLocation)).description + "meters"
         calculateAngle()
     }
     
